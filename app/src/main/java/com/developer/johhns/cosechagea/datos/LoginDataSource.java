@@ -9,14 +9,19 @@ import java.io.IOException;
  */
 public class LoginDataSource {
 
+    DBHelper db ;
+
     public Result<LoggedInUser> login(String username, String password) {
 
         try {
-            //LoggedInUser fakeUser ;
             LoggedInUser fakeUser ;
+            if ( db.esUsuarioValido( username , password ) ) {
+                fakeUser = new LoggedInUser( "12345678ABCDE" , username ) ;
+            } else {
+                fakeUser = new LoggedInUser( null , null ) ;
+            }
+            //LoggedInUser fakeUser ;
 
-
-            fakeUser = new LoggedInUser( "12345678ABCDE" , username ) ;
 
 
             // TODO: handle loggedInUser authentication
