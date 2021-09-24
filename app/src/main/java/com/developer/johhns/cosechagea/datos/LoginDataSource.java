@@ -17,16 +17,15 @@ public class LoginDataSource {
             LoggedInUser fakeUser ;
             if ( db.esUsuarioValido( username , password ) ) {
                 fakeUser = new LoggedInUser( "12345678ABCDE" , username ) ;
+                new Result.Success<>(fakeUser) ;
             } else {
-                fakeUser = new LoggedInUser( null , null ) ;
+                Exception e = new Exception();
+                new Result.Error(new IOException("Usuario no existe", e) ) ;
             }
             //LoggedInUser fakeUser ;
-
-
-
+            return null ;
             // TODO: handle loggedInUser authentication
 
-            return new Result.Success<>(fakeUser);
         } catch (Exception e) {
             return new Result.Error(new IOException("Error logging in", e));
         }
