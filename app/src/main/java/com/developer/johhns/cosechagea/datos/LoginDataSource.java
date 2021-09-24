@@ -1,5 +1,8 @@
 package com.developer.johhns.cosechagea.datos;
 
+import android.app.Activity;
+import android.content.Context;
+
 import com.developer.johhns.cosechagea.datos.model.LoggedInUser;
 
 import java.io.IOException;
@@ -9,21 +12,22 @@ import java.io.IOException;
  */
 public class LoginDataSource {
 
-    DBHelper db ;
 
-    public Result<LoggedInUser> login(String username, String password) {
-
+    public Result<LoggedInUser> login(String username, String password, DBHelper db) {
         try {
             LoggedInUser fakeUser ;
             if ( db.esUsuarioValido( username , password ) ) {
                 fakeUser = new LoggedInUser( "12345678ABCDE" , username ) ;
-                new Result.Success<>(fakeUser) ;
+                return new Result.Success<>(fakeUser) ;
             } else {
+                //fakeUser = new LoggedInUser( "0" , username ) ;
+                //new Result.Success<>(fakeUser) ;
+
                 Exception e = new Exception();
-                new Result.Error(new IOException("Usuario no existe", e) ) ;
+                return new Result.Error(new IOException("Usuario no existe", e) ) ;
+
             }
             //LoggedInUser fakeUser ;
-            return null ;
             // TODO: handle loggedInUser authentication
 
         } catch (Exception e) {

@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.developer.johhns.cosechagea.R;
 import com.developer.johhns.cosechagea.databinding.ActivityPrincipalBinding;
+import com.developer.johhns.cosechagea.datos.DBHelper;
 import com.developer.johhns.cosechagea.ui.login.LoginViewModel;
 import com.developer.johhns.cosechagea.ui.login.LoginViewModelFactory;
 import com.developer.johhns.cosechagea.databinding.ActivityLoginBinding;
@@ -36,12 +37,14 @@ public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding     binding;
     private Activity                 activity ;
     private ActivityPrincipalBinding principalBinding ;
+    private DBHelper db  ;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        activity = this ;
+
+
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -52,6 +55,9 @@ public class LoginActivity extends AppCompatActivity {
         final EditText passwordEditText = binding.password;
         final Button loginButton = binding.login;
         final ProgressBar loadingProgressBar = binding.loading;
+
+        activity = this ;
+        db = new DBHelper( this ) ;
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -117,7 +123,8 @@ public class LoginActivity extends AppCompatActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     loginViewModel.login(usernameEditText.getText().toString(),
-                            passwordEditText.getText().toString());
+                            passwordEditText.getText().toString(),
+                            db );
                 }
                 return false;
             }
@@ -128,7 +135,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login( usernameEditText.getText().toString(),
-                                      passwordEditText.getText().toString()
+                                      passwordEditText.getText().toString(),
+                                      db
                                     );
 
             }
