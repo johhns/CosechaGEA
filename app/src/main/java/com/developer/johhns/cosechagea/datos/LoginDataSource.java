@@ -15,12 +15,9 @@ public class LoginDataSource {
             //LoggedInUser fakeUser ;
             LoggedInUser fakeUser ;
 
-            if ( username == "juan" ) {
-                fakeUser = new LoggedInUser( "12345678ABCDE" , username ) ;
-            } else {
 
-                fakeUser = new LoggedInUser( "0" , "invalido" ) ;
-            }
+            fakeUser = new LoggedInUser( "12345678ABCDE" , username ) ;
+
 
             // TODO: handle loggedInUser authentication
 

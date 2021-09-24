@@ -34,12 +34,14 @@ public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel           loginViewModel;
     private ActivityLoginBinding     binding;
+    private Activity                 activity ;
     private ActivityPrincipalBinding principalBinding ;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        activity = this ;
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -86,6 +88,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 //Complete and destroy login activity once successful
                 finish();
+
             }
         });
 
@@ -127,8 +130,7 @@ public class LoginActivity extends AppCompatActivity {
                 loginViewModel.login( usernameEditText.getText().toString(),
                                       passwordEditText.getText().toString()
                                     );
-                Intent i = new Intent( v.getContext() , Principal.class ) ;
-                startActivity(i);
+
             }
         });
     }
@@ -137,6 +139,10 @@ public class LoginActivity extends AppCompatActivity {
         String welcome = getString(R.string.welcome) + model.getDisplayName();
         // TODO : initiate successful logged in experience
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
+
+        Intent i = new Intent( activity.getBaseContext() , Principal.class ) ;
+        startActivity(i);
+
     }
 
     private void showLoginFailed(@StringRes Integer errorString) {
